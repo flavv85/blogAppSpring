@@ -20,7 +20,7 @@ public class AuthService {
         User user = new User();
         user.setUserName(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(encodePassword(registerRequest.getPassword()));
 
         // salvam obiectul de User in DB
         userRepository.save(user);
