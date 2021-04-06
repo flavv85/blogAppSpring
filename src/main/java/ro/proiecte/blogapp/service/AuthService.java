@@ -1,8 +1,13 @@
 package ro.proiecte.blogapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ro.proiecte.blogapp.dto.LoginRequest;
 import ro.proiecte.blogapp.dto.RegisterRequest;
 import ro.proiecte.blogapp.model.User;
 import ro.proiecte.blogapp.repository.UserRepository;
@@ -15,6 +20,8 @@ public class AuthService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public void signup(RegisterRequest registerRequest) {
         User user = new User();
@@ -22,12 +29,19 @@ public class AuthService {
         user.setEmail(registerRequest.getEmail());
         user.setPassword(encodePassword(registerRequest.getPassword()));
 
-        // salvam obiectul de User in DB
+        // salvam obiectul User in DB
         userRepository.save(user);
     }
 
-    private String encodePassword(String password){
+    private String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
 
+    public void login(LoginRequest loginRequest) {
+        // sunt siguri ca userul este autentificat dupa ce executam aceasta metoda
+        Authentication authenticate =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                        loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+    }
 }
