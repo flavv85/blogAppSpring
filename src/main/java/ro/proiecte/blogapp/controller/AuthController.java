@@ -21,13 +21,13 @@ public class AuthController {
     // folosim @RequestBody pentru a sugera ca acesta este corpul mesajului
     @PostMapping("/signup")
     // folosim @ResponseEntity pentru ca backend-ul sa primeasca un raspuns de la client
-    public ResponseEntity signup(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity signup(@RequestBody RegisterRequest registerRequest) {
         authService.signup(registerRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody LoginRequest loginRequest){
-    authService.login(loginRequest);
+    public String login(@RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 }

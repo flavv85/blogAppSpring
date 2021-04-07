@@ -11,6 +11,7 @@ import ro.proiecte.blogapp.dto.LoginRequest;
 import ro.proiecte.blogapp.dto.RegisterRequest;
 import ro.proiecte.blogapp.model.User;
 import ro.proiecte.blogapp.repository.UserRepository;
+import ro.proiecte.blogapp.security.JwtProvider;
 
 // Mapam RegisterRequest obj la User obj; cand setam parola chemam metoda encodePassword
 @Service
@@ -22,6 +23,8 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtProvider jwtProvider;
 
     public void signup(RegisterRequest registerRequest) {
         User user = new User();
@@ -37,11 +40,13 @@ public class AuthService {
         return passwordEncoder.encode(password);
     }
 
-    public void login(LoginRequest loginRequest) {
+    public String login(LoginRequest loginRequest) {
         // sunt siguri ca userul este autentificat dupa ce executam aceasta metoda
         Authentication authenticate =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                         loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
+        return jwtProvider.generateToken(authenticate);
+        // trimitem tokenul in controller care il va trimite catre client
     }
 }
