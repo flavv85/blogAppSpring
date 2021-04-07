@@ -17,9 +17,10 @@ public class JwtProvider {
     // generam key la service start-up si o alocam fiecarui token now
 
     private Key key;
+
     @PostConstruct
     public void init(){
-        key = Keys.secretKeyFor(SignatureAlgorithm.ES512);
+        key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
     // create a method to sign JTW token, cheia generata va semna tokenul JWT
