@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // own method -> nu exita in JPA Repo
+        // own method -> nu exista in JPA Repo
         User user = userRepository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User not " +
                 "found: " + username));
         // folosim fully classified class pentru ca deja mai avem o clasa care se numeste tot User

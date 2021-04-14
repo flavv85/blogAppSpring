@@ -13,6 +13,8 @@ import ro.proiecte.blogapp.model.User;
 import ro.proiecte.blogapp.repository.UserRepository;
 import ro.proiecte.blogapp.security.JwtProvider;
 
+import java.util.Optional;
+
 // Mapam RegisterRequest obj la User obj; cand setam parola chemam metoda encodePassword
 @Service
 public class AuthService {
@@ -49,4 +51,11 @@ public class AuthService {
         return jwtProvider.generateToken(authenticate);
         // trimitem tokenul in controller care il va trimite catre client
     }
+
+    public Optional<org.springframework.security.core.userdetails.User> getCurrentUser(){
+        org.springframework.security.core.userdetails.User principal =
+                (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return Optional.of(principal);
+    }
+
 }
