@@ -1,2 +1,2 @@
 # blogAppSpring
-Blog App with user Auth using SpringBoot
+Blog App using Spring with user Auth JWT 
