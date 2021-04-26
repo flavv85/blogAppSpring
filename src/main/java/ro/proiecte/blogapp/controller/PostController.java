@@ -9,6 +9,7 @@ import ro.proiecte.blogapp.security.PostService;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/posts/")
 public class PostController {
