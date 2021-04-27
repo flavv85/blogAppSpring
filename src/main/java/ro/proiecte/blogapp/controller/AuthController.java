@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.proiecte.blogapp.dto.LoginRequest;
 import ro.proiecte.blogapp.dto.RegisterRequest;
 import ro.proiecte.blogapp.service.AuthService;
+import ro.proiecte.blogapp.service.AuthenticationResponse;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,8 +25,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest loginRequest) {
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
         return authService.login(loginRequest);
     }
+//    public String login(@RequestBody LoginRequest loginRequest) {
+//        return authService.login(loginRequest);
+//    }
 
 }
