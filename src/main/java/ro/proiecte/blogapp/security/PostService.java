@@ -23,6 +23,11 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
+    public PostService(AuthService authService, PostRepository postRepository) {
+        this.authService = authService;
+        this.postRepository = postRepository;
+    }
+
     @Transactional
     public List<PostDto> showAllPosts() {
         List<Post> posts = postRepository.findAll();
