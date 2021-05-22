@@ -11,7 +11,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/posts/")
+@CrossOrigin
+@RequestMapping("/api/posts")
 public class PostController {
     @Autowired
     private PostService postService;
